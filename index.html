@@ -1,0 +1,89 @@
+<style>
+ul {
+    list-style: none;
+	width: 230px;
+	margin-left: -80px;
+}
+
+.menu > li {
+    float: left;
+}
+.menu button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+.menu button:hover,
+.menu button:focus {
+    outline: 0;
+    text-decoration: underline;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    padding: 10px;
+}
+.menu button:focus + .submenu,
+.submenu:hover {
+    display: block;
+}
+</style>
+
+<ul class="menu">
+<script>
+
+$(function() {
+  var apolfield = $('#apolocal1_<?php the_ID(); ?>'), aposfield = $('#aposession1_<?php the_ID(); ?>');
+  var apolbutton = $('#apolocalok1_<?php the_ID(); ?>'), aposbutton = $('#aposessionok1_<?php the_ID(); ?>');
+  
+  if(localStorage.getItem('apolocalstore1_<?php the_ID(); ?>')) {
+    // Проверяем, есть ли запись с именем apolocalstore1_<?php the_ID(); ?> в локальном хранилище
+    apolfield.val(localStorage.getItem('apolocalstore1_<?php the_ID(); ?>'));
+  };
+  
+  apolbutton.click(function() {
+    if(apolfield.val() != '') {
+      // При клике по кнопке ОК у поля локального хранилища записываем значение поля в локальное хранилище
+      localStorage.setItem('apolocalstore1_<?php the_ID(); ?>', apolfield.val());
+	  localStorage.setItem('apolocalcolor1_<?php the_ID(); ?>', '#FEC224');
+    } else {
+      alert('Поле пустое');
+    }
+  });
+  
+  aposbutton.click(function() {
+    if(aposfield.val() != '') {
+      // При клике по кнопке ОК у поля локального хранилища записываем значение поля в локальное хранилище
+	  document.getElementById("aposessionok1_<?php the_ID(); ?>").onclick = function(e) {
+	  document.getElementById("apolocal1_<?php the_ID(); ?>").value = "";
+	  }
+	  localStorage.removeItem('apolocalstore1_<?php the_ID(); ?>');
+	  localStorage.removeItem('apolocalcolor1_<?php the_ID(); ?>');
+    } else {
+    }
+  });
+});
+var item1_<?php the_ID(); ?> = localStorage.getItem('apolocalcolor1_<?php the_ID(); ?>');
+</script>
+    <li>
+        <button>
+			<script>
+				if (localStorage.getItem('apolocalcolor1_<?php the_ID(); ?>')) {
+					document.write('<img src="/wp-content/themes/NewThemes/images/61c2bc01f724f7182eb2584d_Group20105.svg" loading="lazy" alt class="image-3" style="background-color:#FEC224;width:25px;height:25px;border-radius:20px;">');
+				} else {
+					document.write('<img src="/wp-content/themes/NewThemes/images/61c2bc01f724f7182eb2584d_Group20105.svg" loading="lazy" alt class="image-3" style="background-color:#FFFFFF;width:25px;height:25px;border-radius:20px;">');
+				}		
+			</script>
+		</button>
+        <ul class="submenu">
+			<br>
+			<input id="apolocal1_<?php the_ID(); ?>" type="text" placeholder="Введите текст" style="width:270px;"> 
+			<input id="apolocalcolor1_<?php the_ID(); ?>" type="hidden" value="color1"> <br>
+			<input id="apolocalok1_<?php the_ID(); ?>" type="button" value="Добавить заметку">
+			<input id="aposessionok1_<?php the_ID(); ?>" type="button" value="Удалить">
+			<br>
+			<script>document.write(item1_<?php the_ID(); ?>);</script>
+        </ul>
+    </li>
+</ul>
